@@ -8,6 +8,11 @@ variable "github_app_installation_id" {
   description = "The Installation ID of the GitHub App"
 }
 
+variable "github_app_pem_content" {
+  type      = string
+  sensitive = true
+}
+
 variable "azure_sp_json" {
   type      = string
   sensitive = true

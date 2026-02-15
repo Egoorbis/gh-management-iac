@@ -13,8 +13,8 @@ terraform {
 
 provider "github" {
     app_auth {
-      id       = var.github_app_client_id
+      id              = var.github_app_client_id
       installation_id = var.github_app_installation_id
-      pem_file = file(management-iac.2026-02-09.private-key.pem)
+      pem_file        = var.github_app_pem_content
     }
 }
