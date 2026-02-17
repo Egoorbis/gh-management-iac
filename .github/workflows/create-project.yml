@@ -31,13 +31,17 @@ jobs:
       BACKEND_CONTAINER: ${{ secrets.BACKEND_CONTAINER }}
       BACKEND_KEY: ${{ secrets.BACKEND_KEY }}
       ARM_USE_OIDC: true
-      GITHUB_APP_ID: ${{ secrets.GH_APP_CLIENT_ID }}
-      GITHUB_APP_INSTALLATION_ID: ${{ secrets.GH_APP_INSTALLATION_ID }}
-      GITHUB_APP_PEM_FILE: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -69,3 +73,5 @@ jobs:
         id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply terraform.tfplan
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
