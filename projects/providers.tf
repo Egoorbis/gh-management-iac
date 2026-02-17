@@ -1,7 +1,7 @@
 terraform {
-    backend "azurerm" {
-      use_oidc              = true  
-      use_azuread_auth      = true
+  backend "azurerm" {
+    use_oidc         = true
+    use_azuread_auth = true
   }
   required_providers {
     github = {
@@ -12,8 +12,12 @@ terraform {
 }
 
 provider "github" {
-    # Owner is set via GITHUB_OWNER environment variable
+  # Owner is set via GITHUB_OWNER environment variable
+  owner = var.github_organization
 
-    app_auth {
-    }
+  app_auth {
+    id              = var.github_app_id
+    installation_id = var.github_app_installation_id
+    pem_file        = var.github_app_pem_file
+  }
 }
