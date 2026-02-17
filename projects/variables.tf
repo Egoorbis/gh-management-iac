@@ -4,7 +4,6 @@ variable "github_organization" {
   default = "Egoorbis"
 }
 
-
 variable "azure_sp_json" {
   type      = string
   sensitive = true

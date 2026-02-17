@@ -13,5 +13,7 @@ terraform {
 
 provider "github" {
     owner = var.github_organization
-    # Uses GITHUB_TOKEN from environment variable
+
+    app_auth {
+    }
 }
