@@ -1,6 +1,12 @@
+variable "github_organization" {
+  type        = string
+  description = "The GitHub organization where the repositories will be created"
+  default = "Egoorbis"
+}
+
 variable "github_app_client_id" {
   type        = string
-  description = "The Client ID of the GitHub App (found on the App General page)"
+  description = "The App ID of the GitHub App (found on the App General page)"
 }
 
 variable "github_app_installation_id" {
