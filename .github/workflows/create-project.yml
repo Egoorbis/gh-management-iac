@@ -48,8 +48,19 @@ jobs:
         id: version
         run: terraform --version
 
+      - name: Terraform Format Check
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+
+      - name: Terraform Validate
+        id: validate
+        if: github.event_name == 'pull_request'
+        run: terraform init -backend=false && terraform validate
+
       - name: Terraform Init
         id: init
+        if: github.event_name != 'pull_request'
         run: |
           terraform init \
           -backend-config="resource_group_name=$BACKEND_RESOURCE_GROUP" \
@@ -61,12 +72,14 @@ jobs:
 
       - name: Terraform Plan
         id: plan
+        if: github.event_name != 'pull_request'
         run: terraform plan -out=terraform.tfplan -input=false -lock-timeout=300s
         env:
           TF_LOG: DEBUG
 
       - name: "Upload Terraform Plan to Working Directory"
         uses: actions/upload-artifact@v4
+        if: github.event_name != 'pull_request'
         with:
           name: terraformPlan
           path: "${{ env.WORKING_DIRECTORY }}/terraform.tfplan"
