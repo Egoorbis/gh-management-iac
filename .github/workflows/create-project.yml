@@ -51,9 +51,8 @@ jobs:
       - name: Terraform Format Check
         id: fmt
         run: terraform fmt -check -recursive
-        continue-on-error: true
 
-      - name: Terraform Validate
+      - name: Terraform Validate (PR only)
         id: validate
         if: github.event_name == 'pull_request'
         run: terraform init -backend=false && terraform validate
