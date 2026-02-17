@@ -46,6 +46,23 @@ jobs:
           EOF
           echo "GITHUB_APP_PEM_FILE=/tmp/github_app.pem" >> $GITHUB_ENV
 
+      - name: Debug GitHub App Configuration
+        run: |
+          echo "Checking GitHub App environment variables..."
+          echo "GITHUB_APP_ID length: ${#GITHUB_APP_ID}"
+          echo "GITHUB_APP_INSTALLATION_ID length: ${#GITHUB_APP_INSTALLATION_ID}"
+          echo "GITHUB_APP_PEM_FILE: $GITHUB_APP_PEM_FILE"
+          echo ""
+          echo "Checking PEM file..."
+          if [ -f "$GITHUB_APP_PEM_FILE" ]; then
+            echo "PEM file exists at $GITHUB_APP_PEM_FILE"
+            echo "PEM file size: $(wc -c < $GITHUB_APP_PEM_FILE) bytes"
+            echo "First line: $(head -n 1 $GITHUB_APP_PEM_FILE)"
+            echo "Last line: $(tail -n 1 $GITHUB_APP_PEM_FILE)"
+          else
+            echo "ERROR: PEM file NOT found at $GITHUB_APP_PEM_FILE"
+          fi
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -61,10 +78,14 @@ jobs:
           -backend-config="storage_account_name=$BACKEND_STORAGE_ACCOUNT" \
           -backend-config="container_name=$BACKEND_CONTAINER" \
           -backend-config="key=$BACKEND_KEY" \
+        env:
+          TF_LOG: DEBUG
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -out=terraform.tfplan -input=false -lock-timeout=300s
+        env:
+          TF_LOG: DEBUG
 
       - name: "Upload Terraform Plan to Working Directory"
         uses: actions/upload-artifact@v4
@@ -76,3 +97,5 @@ jobs:
         id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply terraform.tfplan
+        env:
+          TF_LOG: DEBUG
