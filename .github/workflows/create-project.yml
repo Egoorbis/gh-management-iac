@@ -20,8 +20,9 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./projects
+        working-directory: ${{ env.WORKING_DIRECTORY }}
     env:
+      WORKING_DIRECTORY: ./projects
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -66,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: terraformPlan
-          path: "terraform.tfplan"
+          path: "${{ env.WORKING_DIRECTORY }}/terraform.tfplan"
 
       - name: Terraform Apply
         id: apply
