@@ -33,11 +33,18 @@ jobs:
       ARM_USE_OIDC: true
       GITHUB_APP_ID: ${{ secrets.GH_APP_CLIENT_ID }}
       GITHUB_APP_INSTALLATION_ID: ${{ secrets.GH_APP_INSTALLATION_ID }}
-      GITHUB_APP_PEM_FILE: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Write GitHub App PEM File
+        run: |
+          mkdir -p /tmp
+          cat > /tmp/github_app.pem << 'EOF'
+          ${{ secrets.GH_APP_PRIVATE_KEY }}
+          EOF
+          echo "GITHUB_APP_PEM_FILE=/tmp/github_app.pem" >> $GITHUB_ENV
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
