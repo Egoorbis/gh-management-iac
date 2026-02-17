@@ -25,7 +25,8 @@ override.tf.json
 
 # Ignore transient lock info files created by terraform apply
 .terraform.tfstate.lock.info
-.terraform.lock.hcl
+# Note: .terraform.lock.hcl should be committed for infrastructure projects
+# to ensure consistent provider versions across environments
 
 # Include override files you do wish to add to version control using negated pattern
 # !example_override.tf
