@@ -20,6 +20,13 @@ The workflow requires the following GitHub secrets to be configured:
 - **Azure Backend**: `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_TENANT_ID`, `BACKEND_RESOURCE_GROUP`, `BACKEND_STORAGE_ACCOUNT`, `BACKEND_CONTAINER`, `BACKEND_KEY`
 - **GitHub App**: `GH_APP_ID`, `GH_APP_INSTALLATION_ID`, `GH_APP_PRIVATE_KEY`
 
+## 🔄 Workflow Behavior
+- **Pull Requests**: Validates Terraform syntax and formatting without connecting to Azure backend
+- **Push to Main**: Initializes Terraform with Azure backend, creates plan, and applies changes
+- **Manual Trigger**: Same as push to main
+
+Note: Azure OIDC federated identity must be configured for push events to main branch.
+
 ## 📂 Structure
 - `/modules/repository`: The reusable blueprint for all my project repos.
 - `/projects`: The live configuration where repositories are instantiated.
