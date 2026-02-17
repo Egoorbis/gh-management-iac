@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "github" {
-  # Owner is set via GITHUB_OWNER environment variable
+  # Owner is set via the github_organization variable
   owner = var.github_organization
 
   app_auth {

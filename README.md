@@ -15,6 +15,11 @@ New repositories are defined as modules within this project. By running the Terr
 2. Enforce **Branch Protection Rules** (No direct pushes to `main`).
 3. Inject **GitHub Actions Secrets** (Azure/AWS Credentials) automatically.
 
+## 🔐 Required Secrets
+The workflow requires the following GitHub secrets to be configured:
+- **Azure Backend**: `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_TENANT_ID`, `BACKEND_RESOURCE_GROUP`, `BACKEND_STORAGE_ACCOUNT`, `BACKEND_CONTAINER`, `BACKEND_KEY`
+- **GitHub App**: `GH_APP_ID`, `GH_APP_INSTALLATION_ID`, `GH_APP_PRIVATE_KEY`
+
 ## 📂 Structure
 - `/modules/repository`: The reusable blueprint for all my project repos.
 - `/projects`: The live configuration where repositories are instantiated.
