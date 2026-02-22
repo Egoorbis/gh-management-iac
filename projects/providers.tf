@@ -16,4 +16,11 @@ provider "github" {
     token = var.github_token
 }
 
+provider "azurerm" {
+  features {
+    
+  }
+  use_oidc = true
+}
+
 provider "azuread" {}
