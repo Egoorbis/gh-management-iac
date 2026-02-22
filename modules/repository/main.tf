@@ -34,11 +34,6 @@ resource "github_branch_protection" "main" {
   }
 }
 
-resource "github_secret" "example" {
-  repository      = github_repository.this.name
-  secret_name     = "EXAMPLE_SECRET"
-  plaintext_value   = "This is a secret value stored in GitHub Actions secrets."
-} 
 
 resource "github_actions_secret" "azure_secrets" {
   for_each = {
