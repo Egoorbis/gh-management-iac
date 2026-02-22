@@ -16,4 +16,4 @@ provider "github" {
     token = var.github_token
 }
 
-provider "azzuread" {}
+provider "azuread" {}
