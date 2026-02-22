@@ -32,11 +32,8 @@ jobs:
 
       ARM_USE_OIDC: true # Tells Terraform to use OIDC instead of a Secret
 
-      TF_LOG: DEBUG
-
-      TF_VAR_github_app_client_id: ${{ secrets.GH_APP_CLIENT_ID }}
-      TF_VAR_github_app_installation_id: ${{ secrets.GH_APP_INSTALLATION_ID }}
-      TF_VAR_github_app_pem_content: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      TF_LOG: WARN
+      TF_VAR_github_token: ${{ secrets.GH_PAT }}
 
     steps:
       - name: Checkout Code
@@ -72,5 +69,3 @@ jobs:
         id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply terraform.tfplan
-
-

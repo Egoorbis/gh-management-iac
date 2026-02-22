@@ -1,20 +1,5 @@
-variable "github_app_client_id" {
+variable "github_token" {
+  description = "GitHub Personal Access Token with repo permissions"
   type        = string
-  description = "The Client ID of the GitHub App (found on the App General page)"
-}
-
-variable "github_app_installation_id" {
-  type        = string
-  description = "The Installation ID of the GitHub App"
-}
-
-variable "github_app_pem_content" {
-  type      = string
-  sensitive = true
-}
-
-variable "azure_sp_json" {
-  type      = string
-  sensitive = true
-  default   = "" # Optional for now
+  sensitive   = true
 }
