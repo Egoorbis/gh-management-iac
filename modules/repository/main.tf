@@ -33,3 +33,25 @@ resource "github_branch_protection" "main" {
     required_approving_review_count = 0 
   }
 }
+
+resource "github_secret" "example" {
+  repository      = github_repository.this.name
+  secret_name     = "EXAMPLE_SECRET"
+  plaintext_value   = "This is a secret value stored in GitHub Actions secrets."
+} 
+
+resource "github_actions_secret" "azure_secrets" {
+  for_each = {
+    "AZURE_CLIENT_ID"       = var.azure_client_id
+    "AZURE_SUBSCRIPTION_ID" = var.azure_subscription_id
+    "AZURE_TENANT_ID"       = var.azure_tenant_id
+    "BACKEND_RESOURCE_GROUP"  = var.backend_resource_group
+    "BACKEND_STORAGE_ACCOUNT" = var.backend_storage_account
+    "BACKEND_CONTAINER_NAME"  = var.backend_container
+    "BACKEND_KEY"             = var.repo_name
+  }
+
+  repository      = github_repository.this.name
+  secret_name     = each.key
+  plaintext_value = each.value
+}

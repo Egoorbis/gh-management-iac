@@ -22,6 +22,7 @@ jobs:
         shell: bash
         working-directory: ./projects
     env:
+      ARM_USE_OIDC: true
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -30,10 +31,15 @@ jobs:
       BACKEND_CONTAINER: ${{ secrets.BACKEND_CONTAINER }}
       BACKEND_KEY: ${{ secrets.BACKEND_KEY }}
 
-      ARM_USE_OIDC: true # Tells Terraform to use OIDC instead of a Secret
-
+      # Terraform variables
       TF_LOG: WARN
       TF_VAR_github_token: ${{ secrets.GH_PAT }}
+      TF_VAR_azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      TF_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      TF_VAR_backend_resource_group: ${{ secrets.BACKEND_RESOURCE_GROUP }}
+      TF_VAR_backend_storage_account: ${{ secrets.BACKEND_STORAGE_ACCOUNT }}
+      TF_VAR_backend_container: ${{ secrets.BACKEND_CONTAINER }}
 
     steps:
       - name: Checkout Code
