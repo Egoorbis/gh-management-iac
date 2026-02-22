@@ -34,8 +34,3 @@ variable "backend_container" {
   type = string 
   sensitive = true
 }
-
-variable "backend_resource_group" {
-  type = string
-  sensitive = true
-}

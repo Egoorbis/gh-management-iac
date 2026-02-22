@@ -48,7 +48,7 @@ resource "github_actions_secret" "azure_secrets" {
     "BACKEND_RESOURCE_GROUP"  = var.backend_resource_group
     "BACKEND_STORAGE_ACCOUNT" = var.backend_storage_account
     "BACKEND_CONTAINER_NAME"  = var.backend_container
-    "BACKEND_KEY"             = var.repo_name
+    "BACKEND_KEY"             = "${github_repository.this.name}.tfstate"
   }
 
   repository      = github_repository.this.name
