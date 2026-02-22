@@ -1,4 +1,4 @@
-output "client_id" {
+output "azure_client_id" {
   value = azuread_application.this.client_id
 }
 
