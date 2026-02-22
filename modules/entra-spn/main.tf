@@ -1,6 +1,6 @@
 # 1. Create the Entra ID Application
 resource "azuread_application" "this" {
-  display_name = var.app_name
+  display_name = "spn-${var.repo_name}"
 }
 
 # 2. Create the Service Principal
