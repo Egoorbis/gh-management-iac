@@ -13,7 +13,11 @@ variable "additional_topics" {
   default = []
 }
 
-variable "azure_client_id" {} 
+variable "azure_client_id" { 
+  type = string 
+  sensitive = true
+}
+
 variable "azure_subscription_id" {}  
 variable "azure_tenant_id" {} 
 variable "backend_resource_group" {}

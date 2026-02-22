@@ -15,3 +15,5 @@ provider "github" {
     owner = "Egoorbis"
     token = var.github_token
 }
+
+provider "azzuread" {}

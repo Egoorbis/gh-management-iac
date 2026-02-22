@@ -4,12 +4,6 @@ variable "github_token" {
   sensitive   = true
 }
 
-
-variable "azure_client_id" { 
-  type = string 
-  sensitive = true
-}
-
 variable "azure_subscription_id" { 
   type = string 
   sensitive = true
