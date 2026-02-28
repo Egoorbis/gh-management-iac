@@ -1,23 +1,35 @@
-# 🚀 GitHub Infrastructure as Code (IaC)
+# 🚀 GitHub Repository Vending Machine
 
-This repository serves as the **Central Governance Engine** for my GitHub portfolio. It uses Terraform and GitHub Apps to automate the lifecycle of my technical projects, ensuring every repository follows best practices from Day Zero.
+This repository automates the complete provisioning of GitHub repositories with Azure integration. Using Terraform, it orchestrates both GitHub repository creation and Azure service principal setup with federated OIDC credentials for GitHub Actions—all in one go.
 
 ## 🏗️ Architecture
 - **Tooling:** Terraform (HCL)
-- **Authentication:** GitHub App (Fine-grained permissions)
-- **Security:** Automated Branch Protections, Secret Scanning, and Vulnerability Alerts.
-
-
+- **GitHub:** Terraform GitHub Provider with GitHub Apps
+- **Azure:** Entra ID for service principals + OIDC federation
+- **Security:** Automated branch protections, secret scanning, vulnerability alerts, and keyless GitHub Actions authentication
 
 ## 🛠️ How it Works
-New repositories are defined as modules within this project. By running the Terraform pipeline, I can:
-1. Provision a new repository with a standardized description and topics.
-2. Enforce **Branch Protection Rules** (No direct pushes to `main`).
-3. Inject **GitHub Actions Secrets** (Azure/AWS Credentials) automatically.
+The vending machine automates a two-step process:
+
+1. **Entra SPN Module**: Creates an Azure service principal with federated identity credentials for GitHub Actions OIDC authentication
+   - Enables keyless authentication from GitHub Actions
+   - Automatically configured for `main` branch deployments
+   - Role assignments for Azure subscription access
+
+2. **Repository Module**: Provisions a fully-configured GitHub repository
+   - Enforces `main` branch protection (no direct pushes, requires PR)
+   - Enables secret scanning & vulnerability alerts
+   - Auto-injects Azure credentials as GitHub Actions secrets
+   - Configures backend state storage for Terraform deployments
+
+3. **Projects**: Define new repositories as module instances in `/projects/main.tf`
+
+Simply add a new module block, run `terraform apply`, and get a fully-secured, Azure-integrated repository!
 
 ## 📂 Structure
-- `/modules/repository`: The reusable blueprint for all my project repos.
-- `/projects`: The live configuration where repositories are instantiated.
+- `/modules/entra-spn`: Creates Azure Entra service principals with OIDC federation
+- `/modules/repository`: Provisions GitHub repositories with security & Azure integration
+- `/projects`: Live repository configurations (instantiate modules here)
 
 ---
 *Developed with a Security-First mindset by egoorbis.*
