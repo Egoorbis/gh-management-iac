@@ -5,7 +5,7 @@ module "test_spn" {
   azure_subscription_id = var.azure_subscription_id
 }
 
-# 2. Provision the Repository
+# 2. Vend the Repository
 module "test_repo" {
   source      = "../modules/repository"
   repo_name   = module.test_spn.repo_name
