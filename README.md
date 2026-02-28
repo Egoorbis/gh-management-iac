@@ -5,13 +5,13 @@ This repository automates the complete provisioning of GitHub repositories with 
 ## 🏗️ Architecture
 - **Tooling:** Terraform (HCL)
 - **GitHub:** Terraform GitHub Provider with GitHub Apps
-- **Azure:** Entra ID for service principals + OIDC federation
+- **Azure:** Entra ID for service principals, OIDC federation and Azure RM for role assignments
 - **Security:** Automated branch protections, secret scanning, vulnerability alerts, and keyless GitHub Actions authentication
 
 ## 🛠️ How it Works
 The vending machine automates a two-step process:
 
-1. **Entra SPN Module**: Creates an Azure service principal with federated identity credentials for GitHub Actions OIDC authentication
+1. **Entra SPN Module**: Creates an Azure service principal with federated identity credentials for GitHub Actions OIDC authentication. 
    - Enables keyless authentication from GitHub Actions
    - Automatically configured for `main` branch deployments
    - Role assignments for Azure subscription access
@@ -31,6 +31,4 @@ Simply add a new module block, run `terraform apply`, and get a fully-secured, A
 - `/modules/repository`: Provisions GitHub repositories with security & Azure integration
 - `/projects`: Live repository configurations (instantiate modules here)
 
----
-*Developed with a Security-First mindset by egoorbis.*
 
